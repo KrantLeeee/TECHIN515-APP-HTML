@@ -1,0 +1,24 @@
+{% extends '_base.html' %}
+{% block main %}
+<h1>Data for {{ selected_date }}</h1>
+<div class="row">
+  {% for entry in data %}
+  <div class="col-md-6">
+    <div class="card">
+      <img src="{{ entry.ImageUrl }}" class="card-img-top" alt="Weevil Image">
+      <div class="card-body">
+        <p class="card-text">Time: {{ entry.TS[11:19] }}</p>
+        <p class="card-text">Weevil Count: {{ entry.Weevil_number }}</p>
+        <form method="post" action="{{ url_for('update_weevil_number', partition_key=entry.PartitionKey, row_key=entry.RowKey) }}">
+          <div class="mb-3">
+            <label for="weevilCount" class="form-label">Update Weevil Count</label>
+            <input type="number" class="form-control" id="weevilCount" name="weevil_count" value="{{ entry.Weevil_number }}">
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+{% block main %}
+<h1>Peaweevil Detection Chart</h1>
+<div id="chart" class="w-100"></div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script>
+  vegaEmbed('#chart', {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {"url": "/chart-data"},
+    "mark": "line",
+    "encoding": {
+      "x": {"field": "date", "type": "temporal", "title": "Date"},
+      "y": {"field": "count", "type": "quantitative", "title": "Weevil Count"}
+    }
+  }).catch(console.error);
+</script>
+{% endblock %}
